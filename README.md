@@ -1,0 +1,2 @@
+# WWMessageBar
+Simple message bar.
