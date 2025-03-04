@@ -10,7 +10,7 @@ import UIKit
 // MARK: - typealias
 public extension WWMessageBar {
     
-    typealias MessageInformation = (title: String?, message: String, level: Level)
+    typealias MessageInformation = (title: String?, message: String, level: Level, tag: String?)
 }
 
 // MARK: - enum

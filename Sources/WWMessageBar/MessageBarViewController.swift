@@ -15,6 +15,8 @@ final class MessageBarViewController: UIViewController {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var statusBarHeightConstraint: NSLayoutConstraint!
     
+    var info: WWMessageBar.MessageInformation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -28,6 +30,7 @@ extension MessageBarViewController {
     /// - Parameter info: WWMessageBar.MessageInformation
     func setting(info: WWMessageBar.MessageInformation) {
         
+        self.info = info
         titleLabel.isHidden = true
         
         if let title = info.title {
