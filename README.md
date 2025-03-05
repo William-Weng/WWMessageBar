@@ -22,7 +22,7 @@ dependencies: [
 |configure(delegate:height:barType:displayDelayTime:dismissDelayTime:)|相關數值設定|
 |display(title:message:level:tag:)|顯示文字訊息|
 
-## WWMessageBar.Delegate
+## [WWMessageBar.Delegate](https://mockuphone.com/)
 |函式|功能|
 |-|-|
 |messageBar(_:didTouched:)|訊息Bar被點到|
