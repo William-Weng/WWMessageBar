@@ -22,6 +22,7 @@ class MessageBarWindow: UIWindow {
     private var dismissDelayTime: TimeInterval = 1.5
     private var displayFrame: CGRect = .zero
     private var dismissFrame: CGRect = .zero
+    private var barType: WWMessageBar.BarType = .message
     
     private weak var delegate: WWMessageBar.Delegate?
     
@@ -48,18 +49,23 @@ class MessageBarWindow: UIWindow {
 
 // MARK: - 公用函式
 extension MessageBarWindow {
-        
+    
     /// 相關數值設定
     /// - Parameters:
     ///   - delegate: WWMessageBar.Delegate?
     ///   - height: CGFloat
+    ///   - barType: WWMessageBar.BarType
     ///   - displayDelayTime: TimeInterval
     ///   - dismissDelayTime: TimeInterval
-    func configure(delegate: WWMessageBar.Delegate?, height: CGFloat, displayDelayTime: TimeInterval, dismissDelayTime: TimeInterval) {
+    func configure(delegate: WWMessageBar.Delegate?, height: CGFloat, barType: WWMessageBar.BarType, displayDelayTime: TimeInterval, dismissDelayTime: TimeInterval) {
+        
         self.delegate = delegate
         self.height = height
+        self.barType = barType
         self.displayDelayTime = displayDelayTime
         self.dismissDelayTime = dismissDelayTime
+        
+        messageBarViewController?.barType = barType
     }
     
     /// 顯示文字
@@ -129,7 +135,7 @@ private extension MessageBarWindow {
         }
         
         isDisplay = true
-        messageBarViewController?.setting(info: info)
+        messageBarViewController?.setting(with: info)
         
         frame = dismissFrame
         let animator = UIViewPropertyAnimator(duration: displayDelayTime, curve: .easeInOut) { [unowned self] in

@@ -12,15 +12,15 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.0.1"))
+    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
 ### [Function - 可用函式](https://ezgif.com/video-to-webp)
 |函式|功能|
 |-|-|
-|configure(delegate:height:displayDelayTime:dismissDelayTime:tag:)|相關數值設定|
-|display(title:message:level:)|顯示文字訊息|
+|configure(delegate:height:barType:displayDelayTime:dismissDelayTime:)|相關數值設定|
+|display(title:message:level:tag:)|顯示文字訊息|
 
 ## WWMessageBar.Delegate
 |函式|功能|
@@ -42,16 +42,20 @@ final class ViewController: UIViewController {
     @IBAction func displayMessage(_ sender: UIButton) {
         WWMessageBar.shared.display(message: Date(), level: .debug)
         WWMessageBar.shared.display(title: "info", message: Date(), level: .info)
-        WWMessageBar.shared.display(message: Date(), level: .notice)
-        WWMessageBar.shared.display(message: Date(), level: .critical)
-        WWMessageBar.shared.display(title: "warning", message: Date(), level: .warning)
+        WWMessageBar.shared.display(message: Date(), level: .notice)    
+    }
+    
+    @IBAction func displayNotification(_ sender: UIButton) {
+        WWMessageBar.shared.configure(delegate: self, barType: .notification)
+        WWMessageBar.shared.display(message: Date(), level: .critical, tag: "[Notification]")
+        WWMessageBar.shared.display(title: "warning", message: Date(), level: .warning, tag: "[Notification]")
     }
 }
 
 extension ViewController: WWMessageBar.Delegate {
- 
+    
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
-        print(info)
+        print(info!)
     }
 }
 ```

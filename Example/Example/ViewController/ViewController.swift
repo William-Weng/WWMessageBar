@@ -20,15 +20,19 @@ final class ViewController: UIViewController {
         WWMessageBar.shared.display(message: Date(), level: .debug)
         WWMessageBar.shared.display(title: "info", message: Date(), level: .info)
         WWMessageBar.shared.display(message: Date(), level: .notice)
-        WWMessageBar.shared.display(message: Date(), level: .critical)
-        WWMessageBar.shared.display(title: "warning", message: Date(), level: .warning)
+    }
+    
+    @IBAction func displayNotification(_ sender: UIButton) {
+        WWMessageBar.shared.configure(delegate: self, barType: .notification)
+        WWMessageBar.shared.display(message: Date(), level: .critical, tag: "[Notification]")
+        WWMessageBar.shared.display(title: "warning", message: Date(), level: .warning, tag: "[Notification]")
     }
 }
 
 // MARK: - WWMessageBar.Delegate
 extension ViewController: WWMessageBar.Delegate {
- 
+    
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
-        print(info)
+        print(info!)
     }
 }

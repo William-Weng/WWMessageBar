@@ -10,11 +10,17 @@ import UIKit
 // MARK: - typealias
 public extension WWMessageBar {
     
-    typealias MessageInformation = (title: String?, message: String, level: Level, tag: String?)
+    typealias MessageInformation = (title: String?, message: String, level: Level, tag: String?)    // (標題, 訊息, 等級, 註記)
 }
 
 // MARK: - enum
 public extension WWMessageBar {
+    
+    /// 訊息框樣式
+    public enum BarType {
+        case message        // 滿版樣式
+        case notification   // 推播樣式
+    }
     
     /// Message的等級
     public enum Level {

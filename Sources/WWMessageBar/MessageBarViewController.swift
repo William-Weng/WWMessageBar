@@ -10,12 +10,16 @@ import UIKit
 // MARK: - MessageBar主畫面
 final class MessageBarViewController: UIViewController {
     
+    @IBOutlet weak var iconView: UIView!
+    @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var statusBarHeightConstraint: NSLayoutConstraint!
     
-    var info: WWMessageBar.MessageInformation?
+    var barType: WWMessageBar.BarType = .message
+    
+    private(set) var info: WWMessageBar.MessageInformation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,8 +31,9 @@ final class MessageBarViewController: UIViewController {
 extension MessageBarViewController {
     
     /// 畫面顯示相關設定
-    /// - Parameter info: WWMessageBar.MessageInformation
-    func setting(info: WWMessageBar.MessageInformation) {
+    /// - Parameters:
+    ///   - info: WWMessageBar.MessageInformation
+    func setting(with info: WWMessageBar.MessageInformation) {
         
         self.info = info
         titleLabel.isHidden = true
@@ -40,7 +45,8 @@ extension MessageBarViewController {
         
         messageLabel.text = info.message
         iconImageView.image = info.level.icon()
-        view.backgroundColor = info.level.backgroundColor()
+        
+        configure(barType: barType, backgroundColor: info.level.backgroundColor())
     }
 }
 
@@ -51,5 +57,23 @@ private extension MessageBarViewController {
     func initSetting() {
         guard let statusBarManager = UIStatusBarManager._build() else { return }
         statusBarHeightConstraint.constant = statusBarManager.statusBarFrame.height
+    }
+    
+    /// 外框樣式設定
+    /// - Parameters:
+    ///   - barType: 外框樣式
+    ///   - backgroundColor: 背景色
+    func configure(barType: WWMessageBar.BarType, backgroundColor: UIColor) {
+        
+        switch barType {
+        case .message:
+            iconView.backgroundColor = .clear
+            messageView.backgroundColor = .clear
+            view.backgroundColor = backgroundColor
+        case .notification:
+            iconView.backgroundColor = backgroundColor
+            messageView.backgroundColor = backgroundColor
+            view.backgroundColor = .clear
+        }
     }
 }
