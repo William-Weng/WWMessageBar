@@ -12,6 +12,7 @@ final class MessageBarViewController: UIViewController {
     
     @IBOutlet weak var iconView: UIView!
     @IBOutlet weak var messageView: UIView!
+    @IBOutlet weak var iconImageBackView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
@@ -51,6 +52,8 @@ extension MessageBarViewController {
             titleLabel.isHidden = false
         }
         
+        iconImageBackView.layer.cornerRadius = iconImageBackView.frame.width * 0.5
+        
         configure(barType: barType, backgroundColor: info.level.backgroundColor())
     }
 }
@@ -69,6 +72,8 @@ private extension MessageBarViewController {
     ///   - barType: 外框樣式
     ///   - backgroundColor: 背景色
     func configure(barType: WWMessageBar.BarType, backgroundColor: UIColor) {
+        
+        iconImageBackView.tintColor = backgroundColor
         
         switch barType {
         case .message:

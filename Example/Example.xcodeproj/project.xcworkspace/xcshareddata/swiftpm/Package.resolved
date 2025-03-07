@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWMessageBar",
       "state" : {
-        "revision" : "63f6ed351869a9d41f6d2699a2bb3da35a2c4510",
-        "version" : "1.0.2"
+        "revision" : "7efad8980bafcb4666212f7111a52e27fa9a3298",
+        "version" : "1.0.3"
       }
     }
   ],

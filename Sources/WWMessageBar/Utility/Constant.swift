@@ -44,16 +44,16 @@ public extension WWMessageBar {
             }
         }
         
-        /// 背景色
+        /// [背景色](https://www.bootcss.com/p/websafecolors/)
         /// - Returns: UIColor
         func backgroundColor() -> UIColor {
             
             switch self {
-            case .debug: return UIColor(red: 209, green: 209, blue: 224, alpha: 255)
+            case .debug: return UIColor(red: 85, green: 85, blue: 85, alpha: 255)
             case .info: return UIColor(red: 77, green: 166, blue: 255, alpha: 255)
-            case .notice: return UIColor(red: 247, green: 247, blue: 129, alpha: 255)
-            case .warning: return UIColor(red: 255, green: 153, blue: 153, alpha: 255)
-            case .critical: return UIColor(red: 163, green: 102, blue: 255, alpha: 255)
+            case .notice: return UIColor(red: 0, green: 153, blue: 102, alpha: 255)
+            case .warning: return UIColor(red: 255, green: 26, blue: 26, alpha: 255)
+            case .critical: return UIColor(red: 153, green: 102, blue: 255, alpha: 255)
             }
         }
     }
