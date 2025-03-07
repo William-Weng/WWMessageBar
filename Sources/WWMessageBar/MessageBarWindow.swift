@@ -11,7 +11,7 @@ import UIKit
 class MessageBarWindow: UIWindow {
     
     @IBOutlet weak var statusBarHeightConstraint: NSLayoutConstraint!
-        
+    
     private(set) var messageQueue: [WWMessageBar.MessageInformation] = []
     
     private var isDisplay = false
@@ -21,7 +21,9 @@ class MessageBarWindow: UIWindow {
     private var displayFrame: CGRect = .zero
     private var dismissFrame: CGRect = .zero
     private var barType: WWMessageBar.BarType = .message
-        
+    
+    private var dismissAnimator: UIViewPropertyAnimator?
+    
     private lazy var messageBarViewController = UIStoryboard(name: "Storyboard", bundle: .module).instantiateViewController(withIdentifier: "MessageBar") as? MessageBarViewController
     
     override init(frame: CGRect) {
@@ -63,6 +65,15 @@ extension MessageBarWindow {
     func display<T>(title: String? = nil, message: T, level: WWMessageBar.Level, tag: String?) {
         messageQueue.append(WWMessageBar.MessageInformation(title: title, message: "\(message)", level: level, tag: tag))
         displayText(level: level)
+    }
+    
+    /// 隱藏訊息
+    /// - Parameters:
+    ///   - completion: ((UIViewAnimatingPosition) -> Void)?
+    func dismiss(Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
+        dismissAnimator?.stopAnimation(true)
+        dismissAnimator = nil
+        dismiss(animatorDuration: animateDelayTime, afterDelay: 0, Sendable: completion)
     }
 }
 
@@ -143,14 +154,16 @@ private extension MessageBarWindow {
     /// - Parameters:
     ///   - delayTime: TimeInterval
     ///   - completion: ((UIViewAnimatingPosition) -> Void)?
-    func dismiss(afterDelay delayTime: TimeInterval, Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
+    func dismiss(animatorDuration: TimeInterval, afterDelay afterDelay: TimeInterval, Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
         
-        let animator = UIViewPropertyAnimator(duration: delayTime, curve: .easeInOut) { [unowned self] in
+        let dismissAnimator = UIViewPropertyAnimator(duration: animatorDuration, curve: .easeInOut) { [unowned self] in
             frame = dismissFrame
         }
         
-        animator.addCompletion { completion?($0) }
-        animator.startAnimation(afterDelay: delayTime)
+        dismissAnimator.addCompletion { completion?($0) }
+        dismissAnimator.startAnimation(afterDelay: afterDelay)
+        
+        self.dismissAnimator = dismissAnimator
     }
     
     /// 在非動畫時間的點擊處理 => 延遲動畫執行
@@ -161,7 +174,7 @@ private extension MessageBarWindow {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) { [unowned self] in
             
-            dismiss(afterDelay: animateDelayTime) { dismissPosition in
+            dismiss(animatorDuration: animateDelayTime, afterDelay: animateDelayTime) { dismissPosition in
                 
                 if (messageQueue.isEmpty) { return }
                 

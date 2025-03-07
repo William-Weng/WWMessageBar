@@ -12,7 +12,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.0.3"))
 ]
 ```
 
@@ -21,6 +21,7 @@ dependencies: [
 |-|-|
 |configure(delegate:height:barType:displayDelayTime:dismissDelayTime:)|相關數值設定|
 |display(title:message:level:tag:)|顯示文字訊息|
+|dismiss(completion:)|隱藏訊息|
 
 ## [WWMessageBar.Delegate](https://mockuphone.com/)
 |函式|功能|
@@ -51,11 +52,11 @@ final class ViewController: UIViewController {
         WWMessageBar.shared.display(title: "warning", message: Date(), level: .warning, tag: "[Notification]")
     }
 }
-
+    
 extension ViewController: WWMessageBar.Delegate {
     
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
-        print(info!)
+        messageBar.dismiss()
     }
 }
 ```

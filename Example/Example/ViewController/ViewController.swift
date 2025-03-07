@@ -33,6 +33,6 @@ final class ViewController: UIViewController {
 extension ViewController: WWMessageBar.Delegate {
     
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
-        print(info!)
+        messageBar.dismiss()
     }
 }

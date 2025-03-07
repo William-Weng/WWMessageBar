@@ -43,14 +43,13 @@ extension MessageBarViewController {
         
         self.info = info
         titleLabel.isHidden = true
+        messageLabel.text = info.message
+        iconImageView.image = info.level.icon()
         
         if let title = info.title {
             titleLabel.text = title
             titleLabel.isHidden = false
         }
-        
-        messageLabel.text = info.message
-        iconImageView.image = info.level.icon()
         
         configure(barType: barType, backgroundColor: info.level.backgroundColor())
     }
