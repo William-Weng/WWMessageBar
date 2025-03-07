@@ -17,13 +17,19 @@ final class MessageBarViewController: UIViewController {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var statusBarHeightConstraint: NSLayoutConstraint!
     
+    var messageBar: WWMessageBar?
     var barType: WWMessageBar.BarType = .message
-    
+
     private(set) var info: WWMessageBar.MessageInformation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        touchesBeganAction(touches, with: event)
     }
 }
 
@@ -75,5 +81,14 @@ private extension MessageBarViewController {
             messageView.backgroundColor = backgroundColor
             view.backgroundColor = .clear
         }
+    }
+    
+    /// 被點到時的反應
+    /// - Parameters:
+    ///   - touches: Set<UITouch>
+    ///   - event: UIEvent?
+    func touchesBeganAction(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let messageBar = messageBar else { return }
+        messageBar.delegate?.messageBar(messageBar, didTouched: info)
     }
 }

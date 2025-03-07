@@ -14,9 +14,14 @@ open class WWMessageBar: AnyObject {
     
     private var messageBarWindow: MessageBarWindow!
     
+    private(set) weak var delegate: WWMessageBar.Delegate?
+    
     init() {
         messageBarWindow = MessageBarWindow(frame: .zero)
-        messageBarWindow.messageBar = self
+    }
+    
+    deinit {
+        delegate = nil
     }
 }
 
@@ -28,10 +33,11 @@ public extension WWMessageBar {
     ///   - delegate: WWMessageBar.Delegate?
     ///   - height: 訊息列高度
     ///   - barType: 訊息框樣式
-    ///   - displayDelayTime: 顯示的時間
-    ///   - dismissDelayTime: 隱藏的時間
-    func configure(delegate: WWMessageBar.Delegate?, height: CGFloat = 128, barType: BarType = .message, displayDelayTime: TimeInterval = 0.5, dismissDelayTime: TimeInterval = 1.5) {
-        messageBarWindow.configure(delegate: delegate, height: height, barType: barType, displayDelayTime: displayDelayTime, dismissDelayTime: dismissDelayTime)
+    ///   - animateDelayTime: 動畫時間
+    ///   - touchDelayTime: 可以點擊的時間
+    func configure(delegate: WWMessageBar.Delegate?, height: CGFloat = 128, barType: BarType = .message, animateDelayTime: TimeInterval = 0.5, touchDelayTime: TimeInterval = 1.5) {
+        self.delegate = delegate
+        messageBarWindow.configure(messageBar: self ,height: height, barType: barType, animateDelayTime: animateDelayTime, touchDelayTime: touchDelayTime)
     }
     
     /// [顯示文字訊息](https://github.com/JanGorman/SwiftMessageBar)

@@ -11,21 +11,17 @@ import UIKit
 class MessageBarWindow: UIWindow {
     
     @IBOutlet weak var statusBarHeightConstraint: NSLayoutConstraint!
-    
-    var messageBar: WWMessageBar?
-    
+        
     private(set) var messageQueue: [WWMessageBar.MessageInformation] = []
     
     private var isDisplay = false
     private var height = 128.0
-    private var displayDelayTime: TimeInterval = 0.5
-    private var dismissDelayTime: TimeInterval = 1.5
+    private var animateDelayTime: TimeInterval = 0.5
+    private var touchDelayTime: TimeInterval = 1.5
     private var displayFrame: CGRect = .zero
     private var dismissFrame: CGRect = .zero
     private var barType: WWMessageBar.BarType = .message
-    
-    private weak var delegate: WWMessageBar.Delegate?
-    
+        
     private lazy var messageBarViewController = UIStoryboard(name: "Storyboard", bundle: .module).instantiateViewController(withIdentifier: "MessageBar") as? MessageBarViewController
     
     override init(frame: CGRect) {
@@ -36,15 +32,6 @@ class MessageBarWindow: UIWindow {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        touchesBeganAction(touches, with: event)
-    }
-    
-    deinit {
-        delegate = nil
-    }
 }
 
 // MARK: - 公用函式
@@ -52,20 +39,19 @@ extension MessageBarWindow {
     
     /// 相關數值設定
     /// - Parameters:
-    ///   - delegate: WWMessageBar.Delegate?
     ///   - height: CGFloat
     ///   - barType: WWMessageBar.BarType
-    ///   - displayDelayTime: TimeInterval
+    ///   - animateDelayTime: TimeInterval
     ///   - dismissDelayTime: TimeInterval
-    func configure(delegate: WWMessageBar.Delegate?, height: CGFloat, barType: WWMessageBar.BarType, displayDelayTime: TimeInterval, dismissDelayTime: TimeInterval) {
+    func configure(messageBar: WWMessageBar, height: CGFloat, barType: WWMessageBar.BarType, animateDelayTime: TimeInterval, touchDelayTime: TimeInterval) {
         
-        self.delegate = delegate
         self.height = height
         self.barType = barType
-        self.displayDelayTime = displayDelayTime
-        self.dismissDelayTime = dismissDelayTime
+        self.animateDelayTime = animateDelayTime
+        self.touchDelayTime = touchDelayTime
         
         messageBarViewController?.barType = barType
+        messageBarViewController?.messageBar = messageBar
     }
     
     /// 顯示文字
@@ -137,8 +123,7 @@ private extension MessageBarWindow {
         isDisplay = true
         messageBarViewController?.setting(with: info)
         
-        frame = dismissFrame
-        let animator = UIViewPropertyAnimator(duration: displayDelayTime, curve: .easeInOut) { [unowned self] in
+        let animator = UIViewPropertyAnimator(duration: animateDelayTime, curve: .easeInOut) { [unowned self] in
             frame = displayFrame
         }
         
@@ -147,16 +132,7 @@ private extension MessageBarWindow {
             switch displayPosition {
             case .start: break
             case .current: break
-            case .end:
-                
-                dismiss(afterDelay: dismissDelayTime) { dismissPosition in
-                    
-                    if (messageQueue.isEmpty) { return }
-                    
-                    messageQueue.removeFirst()
-                    isDisplay = false
-                    displayText(level: level)
-                }
+            case .end: touchAction(level: level, delayTime: animateDelayTime + touchDelayTime)
             }
         }
         
@@ -169,7 +145,7 @@ private extension MessageBarWindow {
     ///   - completion: ((UIViewAnimatingPosition) -> Void)?
     func dismiss(afterDelay delayTime: TimeInterval, Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
         
-        let animator = UIViewPropertyAnimator(duration: displayDelayTime, curve: .easeInOut) { [unowned self] in
+        let animator = UIViewPropertyAnimator(duration: delayTime, curve: .easeInOut) { [unowned self] in
             frame = dismissFrame
         }
         
@@ -177,11 +153,22 @@ private extension MessageBarWindow {
         animator.startAnimation(afterDelay: delayTime)
     }
     
-    /// 被點到時的反應
+    /// 在非動畫時間的點擊處理 => 延遲動畫執行
     /// - Parameters:
-    ///   - touches: Set<UITouch>
-    ///   - event: UIEvent?
-    func touchesBeganAction(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let messageBar { delegate?.messageBar(messageBar, didTouched: messageBarViewController?.info) }
+    ///   - level: WWMessageBar.Level
+    ///   - delayTime: TimeInterval
+    func touchAction(level: WWMessageBar.Level, delayTime: TimeInterval) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) { [unowned self] in
+            
+            dismiss(afterDelay: animateDelayTime) { dismissPosition in
+                
+                if (messageQueue.isEmpty) { return }
+                
+                messageQueue.removeFirst()
+                isDisplay = false
+                displayText(level: level)
+            }
+        }
     }
 }
