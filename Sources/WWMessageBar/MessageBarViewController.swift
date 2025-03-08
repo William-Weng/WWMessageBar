@@ -21,6 +21,8 @@ final class MessageBarViewController: UIViewController {
     var messageBar: WWMessageBar?
     var barType: WWMessageBar.BarType = .message
 
+    private let textColor = UIColor.white
+
     private(set) var info: WWMessageBar.MessageInformation?
     
     override func viewDidLoad() {
@@ -45,7 +47,6 @@ extension MessageBarViewController {
         self.info = info
         titleLabel.isHidden = true
         messageLabel.text = info.message
-        iconImageView.image = info.level.icon()
         
         if let title = info.title {
             titleLabel.text = title
@@ -53,8 +54,7 @@ extension MessageBarViewController {
         }
         
         iconImageBackView.layer.cornerRadius = iconImageBackView.frame.width * 0.5
-        
-        configure(barType: barType, backgroundColor: info.level.backgroundColor())
+        configure(barType: barType, level: info.level)
     }
 }
 
@@ -70,20 +70,35 @@ private extension MessageBarViewController {
     /// 外框樣式設定
     /// - Parameters:
     ///   - barType: 外框樣式
-    ///   - backgroundColor: 背景色
-    func configure(barType: WWMessageBar.BarType, backgroundColor: UIColor) {
+    ///   - icon: 圖示
+    ///   - tintColor: 主色系
+    func configure(barType: WWMessageBar.BarType, level: WWMessageBar.Level) {
         
-        iconImageBackView.tintColor = backgroundColor
+        var tintColor = level.tintColor()
+        var icon = level.icon()
+        var textColor = self.textColor
+
+        if let messageBar, let settings = messageBar.delegate?.levelSettings(messageBar: messageBar), let setting = settings[level] {
+            textColor = setting.fontColor ?? textColor
+            tintColor = setting.tintColor ?? tintColor
+            icon = setting.icon ?? icon
+        }
+        
+        iconView.backgroundColor = .clear
+        messageView.backgroundColor = .clear
+        view.backgroundColor = .clear
+        
+        iconImageView.image = icon
+        iconImageBackView.tintColor = tintColor
+        titleLabel.textColor = textColor
+        messageLabel.textColor = textColor
         
         switch barType {
         case .message:
-            iconView.backgroundColor = .clear
-            messageView.backgroundColor = .clear
-            view.backgroundColor = backgroundColor
+            view.backgroundColor = tintColor
         case .notification:
-            iconView.backgroundColor = backgroundColor
-            messageView.backgroundColor = backgroundColor
-            view.backgroundColor = .clear
+            iconView.backgroundColor = tintColor
+            messageView.backgroundColor = tintColor
         }
     }
     

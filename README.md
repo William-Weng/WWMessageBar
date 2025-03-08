@@ -12,7 +12,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.0.3"))
+    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -27,6 +27,7 @@ dependencies: [
 |函式|功能|
 |-|-|
 |messageBar(_:didTouched:)|訊息Bar被點到|
+|levelSettings(messageBar:)|等級相關設定|
 
 ## Example
 ```swift
@@ -43,7 +44,7 @@ final class ViewController: UIViewController {
     @IBAction func displayMessage(_ sender: UIButton) {
         WWMessageBar.shared.display(message: Date(), level: .debug)
         WWMessageBar.shared.display(title: "info", message: Date(), level: .info)
-        WWMessageBar.shared.display(message: Date(), level: .notice)    
+        WWMessageBar.shared.display(message: Date(), level: .notice)
     }
     
     @IBAction func displayNotification(_ sender: UIButton) {
@@ -57,6 +58,13 @@ extension ViewController: WWMessageBar.Delegate {
     
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
         messageBar.dismiss()
+    }
+    
+    func levelSettings(messageBar: WWMessageBar) -> [WWMessageBar.Level : WWMessageBar.LevelSetting]? {
+        return [
+            .debug: (icon: UIImage(systemName: "arrow.up.circle"), tintColor: .lightGray, fontColor: .red),
+            .critical: (icon: UIImage(named: "ちいかわ"), tintColor: .magenta, fontColor: .black),
+        ]
     }
 }
 ```

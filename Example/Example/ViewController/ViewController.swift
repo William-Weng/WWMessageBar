@@ -35,4 +35,11 @@ extension ViewController: WWMessageBar.Delegate {
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
         messageBar.dismiss()
     }
+    
+    func levelSettings(messageBar: WWMessageBar) -> [WWMessageBar.Level : WWMessageBar.LevelSetting]? {
+        return [
+            .debug: (icon: UIImage(systemName: "arrow.up.circle"), tintColor: .lightGray, fontColor: .red),
+            .critical: (icon: UIImage(named: "ちいかわ"), tintColor: .magenta, fontColor: .black),
+        ]
+    }
 }

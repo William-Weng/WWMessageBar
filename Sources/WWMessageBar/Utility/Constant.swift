@@ -11,19 +11,20 @@ import UIKit
 public extension WWMessageBar {
     
     typealias MessageInformation = (title: String?, message: String, level: Level, tag: String?)    // (標題, 訊息, 等級, 註記)
+    typealias LevelSetting = (icon: UIImage?, tintColor: UIColor?, fontColor: UIColor?)             // (圖示, 主色調, 字體顏色)
 }
 
 // MARK: - enum
 public extension WWMessageBar {
     
     /// 訊息框樣式
-    public enum BarType {
+    enum BarType: CaseIterable {
         case message        // 滿版樣式
         case notification   // 推播樣式
     }
     
     /// Message的等級
-    public enum Level {
+    enum Level: CaseIterable {
         
         case debug
         case info
@@ -44,9 +45,9 @@ public extension WWMessageBar {
             }
         }
         
-        /// [背景色](https://www.bootcss.com/p/websafecolors/)
+        /// [主色調](https://www.bootcss.com/p/websafecolors/)
         /// - Returns: UIColor
-        func backgroundColor() -> UIColor {
+        func tintColor() -> UIColor {
             
             switch self {
             case .debug: return UIColor(red: 85, green: 85, blue: 85, alpha: 255)

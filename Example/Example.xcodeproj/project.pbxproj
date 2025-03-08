@@ -7,13 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D5B66922D7BBD400083AC40 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5B66912D7BBD400083AC40 /* WWMessageBar */; };
+		3D5B66952D7BD32A0083AC40 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5B66942D7BD32A0083AC40 /* WWMessageBar */; };
 		812D25ED2D755EE700F74ED5 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 812D25EC2D755EE700F74ED5 /* WWMessageBar */; };
 		813C7D1F2D76E7DB00B0C93A /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 813C7D1E2D76E7DB00B0C93A /* WWMessageBar */; };
 		8155D0FC2D7AD1F900E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D0FB2D7AD1F900E6FF58 /* WWMessageBar */; };
 		8155D1022D7AD9AA00E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D1012D7AD9AA00E6FF58 /* WWMessageBar */; };
 		8155D1082D7AE08D00E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D1072D7AE08D00E6FF58 /* WWMessageBar */; };
 		8155D10E2D7AF28800E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D10D2D7AF28800E6FF58 /* WWMessageBar */; };
-		8155D1112D7AF9AE00E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D1102D7AF9AE00E6FF58 /* WWMessageBar */; };
 		817567FC2CA2C2B400B24577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FB2CA2C2B400B24577 /* AppDelegate.swift */; };
 		817568002CA2C2B400B24577 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FF2CA2C2B400B24577 /* ViewController.swift */; };
 		817568032CA2C2B400B24577 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 817568012CA2C2B400B24577 /* Main.storyboard */; };
@@ -38,10 +39,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8155D1112D7AF9AE00E6FF58 /* WWMessageBar in Frameworks */,
+				3D5B66922D7BBD400083AC40 /* WWMessageBar in Frameworks */,
 				8155D1022D7AD9AA00E6FF58 /* WWMessageBar in Frameworks */,
 				8155D1082D7AE08D00E6FF58 /* WWMessageBar in Frameworks */,
 				81B6139E2D77FD3900DFCD3D /* WWMessageBar in Frameworks */,
+				3D5B66952D7BD32A0083AC40 /* WWMessageBar in Frameworks */,
 				813C7D1F2D76E7DB00B0C93A /* WWMessageBar in Frameworks */,
 				8155D10E2D7AF28800E6FF58 /* WWMessageBar in Frameworks */,
 				81B2B0842D76E1AD0014ADBA /* WWMessageBar in Frameworks */,
@@ -139,7 +141,8 @@
 				8155D1012D7AD9AA00E6FF58 /* WWMessageBar */,
 				8155D1072D7AE08D00E6FF58 /* WWMessageBar */,
 				8155D10D2D7AF28800E6FF58 /* WWMessageBar */,
-				8155D1102D7AF9AE00E6FF58 /* WWMessageBar */,
+				3D5B66912D7BBD400083AC40 /* WWMessageBar */,
+				3D5B66942D7BD32A0083AC40 /* WWMessageBar */,
 			);
 			productName = Example;
 			productReference = 817567F82CA2C2B400B24577 /* Example.app */;
@@ -170,7 +173,7 @@
 			);
 			mainGroup = 817567EF2CA2C2B400B24577;
 			packageReferences = (
-				8155D10F2D7AF9AE00E6FF58 /* XCRemoteSwiftPackageReference "WWMessageBar" */,
+				3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */,
 			);
 			productRefGroup = 817567F92CA2C2B400B24577 /* Products */;
 			projectDirPath = "";
@@ -435,17 +438,26 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8155D10F2D7AF9AE00E6FF58 /* XCRemoteSwiftPackageReference "WWMessageBar" */ = {
+		3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWMessageBar";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.4;
+				minimumVersion = 1.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D5B66912D7BBD400083AC40 /* WWMessageBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWMessageBar;
+		};
+		3D5B66942D7BD32A0083AC40 /* WWMessageBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */;
+			productName = WWMessageBar;
+		};
 		812D25EC2D755EE700F74ED5 /* WWMessageBar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWMessageBar;
@@ -468,11 +480,6 @@
 		};
 		8155D10D2D7AF28800E6FF58 /* WWMessageBar */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = WWMessageBar;
-		};
-		8155D1102D7AF9AE00E6FF58 /* WWMessageBar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8155D10F2D7AF9AE00E6FF58 /* XCRemoteSwiftPackageReference "WWMessageBar" */;
 			productName = WWMessageBar;
 		};
 		81B2B0832D76E1AD0014ADBA /* WWMessageBar */ = {

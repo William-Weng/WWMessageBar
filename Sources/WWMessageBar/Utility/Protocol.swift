@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Delegate
 public extension WWMessageBar {
     
     public protocol Delegate: AnyObject {
@@ -16,5 +17,10 @@ public extension WWMessageBar {
         ///   - messageBar: WWMessageBar
         ///   - info: MessageInformation?
         func messageBar(_ messageBar: WWMessageBar, didTouched info: MessageInformation?)
+        
+        /// 等級相關設定
+        /// - Parameter messageBar: WWMessageBar
+        /// - Returns: [Level: LevelSetting]?
+        func levelSettings(messageBar: WWMessageBar) -> [Level: LevelSetting]?
     }
 }
