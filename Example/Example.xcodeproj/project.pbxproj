@@ -3,12 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		3D5B66922D7BBD400083AC40 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5B66912D7BBD400083AC40 /* WWMessageBar */; };
-		3D5B66952D7BD32A0083AC40 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3D5B66942D7BD32A0083AC40 /* WWMessageBar */; };
+		3D79AD912D7C3E5A009F2FD3 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 3D79AD902D7C3E5A009F2FD3 /* WWMessageBar */; };
 		812D25ED2D755EE700F74ED5 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 812D25EC2D755EE700F74ED5 /* WWMessageBar */; };
 		813C7D1F2D76E7DB00B0C93A /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 813C7D1E2D76E7DB00B0C93A /* WWMessageBar */; };
 		8155D0FC2D7AD1F900E6FF58 /* WWMessageBar in Frameworks */ = {isa = PBXBuildFile; productRef = 8155D0FB2D7AD1F900E6FF58 /* WWMessageBar */; };
@@ -43,7 +43,7 @@
 				8155D1022D7AD9AA00E6FF58 /* WWMessageBar in Frameworks */,
 				8155D1082D7AE08D00E6FF58 /* WWMessageBar in Frameworks */,
 				81B6139E2D77FD3900DFCD3D /* WWMessageBar in Frameworks */,
-				3D5B66952D7BD32A0083AC40 /* WWMessageBar in Frameworks */,
+				3D79AD912D7C3E5A009F2FD3 /* WWMessageBar in Frameworks */,
 				813C7D1F2D76E7DB00B0C93A /* WWMessageBar in Frameworks */,
 				8155D10E2D7AF28800E6FF58 /* WWMessageBar in Frameworks */,
 				81B2B0842D76E1AD0014ADBA /* WWMessageBar in Frameworks */,
@@ -142,7 +142,7 @@
 				8155D1072D7AE08D00E6FF58 /* WWMessageBar */,
 				8155D10D2D7AF28800E6FF58 /* WWMessageBar */,
 				3D5B66912D7BBD400083AC40 /* WWMessageBar */,
-				3D5B66942D7BD32A0083AC40 /* WWMessageBar */,
+				3D79AD902D7C3E5A009F2FD3 /* WWMessageBar */,
 			);
 			productName = Example;
 			productReference = 817567F82CA2C2B400B24577 /* Example.app */;
@@ -173,7 +173,7 @@
 			);
 			mainGroup = 817567EF2CA2C2B400B24577;
 			packageReferences = (
-				3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */,
+				3D79AD8F2D7C3E5A009F2FD3 /* XCLocalSwiftPackageReference "../../WWMessageBar" */,
 			);
 			productRefGroup = 817567F92CA2C2B400B24577 /* Products */;
 			projectDirPath = "";
@@ -437,25 +437,20 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWMessageBar";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		3D79AD8F2D7C3E5A009F2FD3 /* XCLocalSwiftPackageReference "../../WWMessageBar" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../WWMessageBar;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		3D5B66912D7BBD400083AC40 /* WWMessageBar */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWMessageBar;
 		};
-		3D5B66942D7BD32A0083AC40 /* WWMessageBar */ = {
+		3D79AD902D7C3E5A009F2FD3 /* WWMessageBar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3D5B66932D7BD32A0083AC40 /* XCRemoteSwiftPackageReference "WWMessageBar" */;
 			productName = WWMessageBar;
 		};
 		812D25EC2D755EE700F74ED5 /* WWMessageBar */ = {
