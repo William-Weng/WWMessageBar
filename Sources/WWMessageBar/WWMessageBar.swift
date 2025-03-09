@@ -50,11 +50,11 @@ public extension WWMessageBar {
         messageBarWindow.display(title: title, message: message, level: level, tag: tag)
     }
     
-    /// 隱藏訊息
+    /// 移除訊息
     /// - Parameters:
     ///   - completion: ((UIViewAnimatingPosition) -> Void)?
-    func dismiss(Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
-        messageBarWindow.dismiss(Sendable: completion)
+    func dismiss(completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
+        messageBarWindow.dismiss(completion: completion)
     }
 }
 

@@ -25,14 +25,30 @@ final class MessageBarViewController: UIViewController {
 
     private(set) var info: WWMessageBar.MessageInformation?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
         initSetting()
     }
+}
+
+// MARK: - @objc
+@objc extension MessageBarViewController {
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        touchesBeganAction(touches, with: event)
+    func tapGestureAction(_ tap: UITapGestureRecognizer) {
+        guard let messageBar = messageBar else { return }
+        messageBar.delegate?.messageBar(messageBar, didTouched: info)
+    }
+    
+    func swipeGestureAction(_ swipe: UISwipeGestureRecognizer) {
+        
+        guard let messageBar = messageBar else { return }
+        
+        switch swipe.direction {
+        case .up: messageBar.dismiss()
+        case .down: break
+        case .left, .right: break
+        default: fatalError()
+        }
     }
 }
 
@@ -63,8 +79,23 @@ private extension MessageBarViewController {
     
     /// 設定最小高度 (StatusBar)
     func initSetting() {
-        guard let statusBarManager = UIStatusBarManager._build() else { return }
+        
+        guard let statusBarManager = UIStatusBarManager._build(for: view.window) else { return }
+        
         statusBarHeightConstraint.constant = statusBarManager.statusBarFrame.height
+        initGestureSetting()
+    }
+    
+    /// 初始化手勢功能
+    func initGestureSetting() {
+        
+        let tap = UITapGestureRecognizer(target:self, action:#selector(tapGestureAction))
+        let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipeGestureAction))
+
+        swipeUp.direction = .up
+        
+        view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(swipeUp)
     }
     
     /// 外框樣式設定

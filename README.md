@@ -12,7 +12,7 @@
 
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.1.0"))
+    .package(url: "https://github.com/William-Weng/WWMessageBar.git", .upToNextMajor(from: "1.1.1"))
 ]
 ```
 
@@ -21,7 +21,7 @@ dependencies: [
 |-|-|
 |configure(delegate:height:barType:displayDelayTime:dismissDelayTime:)|相關數值設定|
 |display(title:message:level:tag:)|顯示文字訊息|
-|dismiss(completion:)|隱藏訊息|
+|dismiss(completion:)|移除訊息|
 
 ## [WWMessageBar.Delegate](https://mockuphone.com/)
 |函式|功能|

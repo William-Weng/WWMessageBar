@@ -64,16 +64,15 @@ extension MessageBarWindow {
     ///   - tag: String?
     func display<T>(title: String? = nil, message: T, level: WWMessageBar.Level, tag: String?) {
         messageQueue.append(WWMessageBar.MessageInformation(title: title, message: "\(message)", level: level, tag: tag))
-        displayText(level: level)
+        displayText()
     }
     
     /// 隱藏訊息
     /// - Parameters:
     ///   - completion: ((UIViewAnimatingPosition) -> Void)?
-    func dismiss(Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
-        dismissAnimator?.stopAnimation(true)
-        dismissAnimator = nil
-        dismiss(animatorDuration: animateDelayTime, afterDelay: 0, Sendable: completion)
+    func dismiss(completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
+        removeDismissAnimation()
+        touchAction(delayTime: 0)
     }
 }
 
@@ -91,7 +90,7 @@ private extension MessageBarWindow {
         windowScene = currentWindowScene
         frameSetting(size: size, height: height)
         frame = dismissFrame
-                
+        
         self._backgroundColor(.clear)
             ._windowLevel(.alert + 1000)
             ._rootViewController(messageBarViewController)
@@ -122,8 +121,7 @@ private extension MessageBarWindow {
     }
     
     /// 顯示訊息
-    /// - Parameter level: WWMessageBar.Level
-    func displayText(level: WWMessageBar.Level) {
+    func displayText() {
         
         guard !isDisplay,
               let info = messageQueue.first
@@ -143,7 +141,7 @@ private extension MessageBarWindow {
             switch displayPosition {
             case .start: break
             case .current: break
-            case .end: touchAction(level: level, delayTime: animateDelayTime + touchDelayTime)
+            case .end: touchAction(delayTime: animateDelayTime + touchDelayTime)
             }
         }
         
@@ -154,23 +152,28 @@ private extension MessageBarWindow {
     /// - Parameters:
     ///   - delayTime: TimeInterval
     ///   - completion: ((UIViewAnimatingPosition) -> Void)?
-    func dismiss(animatorDuration: TimeInterval, afterDelay afterDelay: TimeInterval, Sendable completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
+    func dismiss(animatorDuration: TimeInterval, afterDelay afterDelay: TimeInterval, completion: ((UIViewAnimatingPosition) -> Void)? = nil) {
         
         let dismissAnimator = UIViewPropertyAnimator(duration: animatorDuration, curve: .easeInOut) { [unowned self] in
             frame = dismissFrame
         }
         
-        dismissAnimator.addCompletion { completion?($0) }
+        dismissAnimator.addCompletion { [unowned self] in isDisplay = false; completion?($0) }
         dismissAnimator.startAnimation(afterDelay: afterDelay)
         
         self.dismissAnimator = dismissAnimator
     }
     
+    /// 移除Dismiss動畫
+    func removeDismissAnimation() {
+        dismissAnimator?.stopAnimation(false)
+        dismissAnimator = nil
+    }
+    
     /// 在非動畫時間的點擊處理 => 延遲動畫執行
     /// - Parameters:
-    ///   - level: WWMessageBar.Level
     ///   - delayTime: TimeInterval
-    func touchAction(level: WWMessageBar.Level, delayTime: TimeInterval) {
+    func touchAction(delayTime: TimeInterval) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delayTime) { [unowned self] in
             
@@ -180,7 +183,7 @@ private extension MessageBarWindow {
                 
                 messageQueue.removeFirst()
                 isDisplay = false
-                displayText(level: level)
+                displayText()
             }
         }
     }

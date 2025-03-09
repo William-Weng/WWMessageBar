@@ -33,7 +33,7 @@ final class ViewController: UIViewController {
 extension ViewController: WWMessageBar.Delegate {
     
     func messageBar(_ messageBar: WWMessageBar, didTouched info: WWMessageBar.MessageInformation?) {
-        messageBar.dismiss()
+        print(info)
     }
     
     func levelSettings(messageBar: WWMessageBar) -> [WWMessageBar.Level : WWMessageBar.LevelSetting]? {
