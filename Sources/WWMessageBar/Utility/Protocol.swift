@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Delegate
+// MARK: - WWMessageBar.Delegate
 public extension WWMessageBar {
     
     public protocol Delegate: AnyObject {
@@ -15,8 +15,8 @@ public extension WWMessageBar {
         /// 訊息Bar被點到
         /// - Parameters:
         ///   - messageBar: WWMessageBar
-        ///   - info: MessageInformation?
-        func messageBar(_ messageBar: WWMessageBar, didTouched info: MessageInformation?)
+        ///   - info: MessageInformation
+        func messageBar(_ messageBar: WWMessageBar, didTouched info: MessageInformation)
         
         /// 等級相關設定
         /// - Parameter messageBar: WWMessageBar

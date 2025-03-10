@@ -86,3 +86,12 @@ extension UIStatusBarManager {
         return keyWindow?.windowScene?.statusBarManager
     }
 }
+
+extension UIView {
+    
+    /// 加上手勢動作功能
+    /// - Parameter recognizers: 手勢動作們
+    func _addGestureRecognizers(_ recognizers: [UIGestureRecognizer]) {
+        recognizers.forEach { (_recognizer) in addGestureRecognizer(_recognizer) }
+    }
+}

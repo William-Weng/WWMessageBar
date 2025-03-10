@@ -26,11 +26,11 @@ public extension WWMessageBar {
     /// Message的等級
     enum Level: CaseIterable {
         
-        case debug
-        case info
-        case notice
-        case warning
-        case critical
+        case debug      // 除錯用
+        case info       // 一般訊息
+        case notice     // 提示訊息
+        case warning    // 錯誤
+        case critical   // 完蛋了
         
         /// 圖示
         /// - Returns: UIImage?

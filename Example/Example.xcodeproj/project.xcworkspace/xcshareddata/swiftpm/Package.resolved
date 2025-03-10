@@ -1,0 +1,15 @@
+{
+  "originHash" : "421debfb6b69750c0ed66ee2ba5eb196947691c842bbdec4c7f76a7eacef842e",
+  "pins" : [
+    {
+      "identity" : "wwmessagebar",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWMessageBar",
+      "state" : {
+        "revision" : "8e4db95c75d0a573df96bb83f772b180849ad752",
+        "version" : "1.1.1"
+      }
+    }
+  ],
+  "version" : 3
+}

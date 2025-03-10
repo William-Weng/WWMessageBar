@@ -20,9 +20,9 @@ final class MessageBarViewController: UIViewController {
     
     var messageBar: WWMessageBar?
     var barType: WWMessageBar.BarType = .message
-
+    
     private let textColor = UIColor.white
-
+    
     private(set) var info: WWMessageBar.MessageInformation?
     
     override func viewIsAppearing(_ animated: Bool) {
@@ -34,22 +34,8 @@ final class MessageBarViewController: UIViewController {
 // MARK: - @objc
 @objc extension MessageBarViewController {
     
-    func tapGestureAction(_ tap: UITapGestureRecognizer) {
-        guard let messageBar = messageBar else { return }
-        messageBar.delegate?.messageBar(messageBar, didTouched: info)
-    }
-    
-    func swipeGestureAction(_ swipe: UISwipeGestureRecognizer) {
-        
-        guard let messageBar = messageBar else { return }
-        
-        switch swipe.direction {
-        case .up: messageBar.dismiss()
-        case .down: break
-        case .left, .right: break
-        default: fatalError()
-        }
-    }
+    func tapGestureAction(_ tap: UITapGestureRecognizer) { tapAction() }
+    func swipeGestureAction(_ swipe: UISwipeGestureRecognizer) { swipeAction(swipe) }
 }
 
 // MARK: - 公用函式
@@ -61,12 +47,12 @@ extension MessageBarViewController {
     func setting(with info: WWMessageBar.MessageInformation) {
         
         self.info = info
-        titleLabel.isHidden = true
+        titleLabel.alpha = 0.0
         messageLabel.text = info.message
         
         if let title = info.title {
             titleLabel.text = title
-            titleLabel.isHidden = false
+            titleLabel.alpha = 1.0
         }
         
         iconImageBackView.layer.cornerRadius = iconImageBackView.frame.width * 0.5
@@ -77,13 +63,16 @@ extension MessageBarViewController {
 // MARK: - 小工具
 private extension MessageBarViewController {
     
-    /// 設定最小高度 (StatusBar)
+    /// 初始化設定
     func initSetting() {
-        
-        guard let statusBarManager = UIStatusBarManager._build(for: view.window) else { return }
-        
-        statusBarHeightConstraint.constant = statusBarManager.statusBarFrame.height
+        initStatusBarHeight()
         initGestureSetting()
+    }
+    
+    /// 設定最小高度 (StatusBar)
+    func initStatusBarHeight() {
+        guard let statusBarManager = UIStatusBarManager._build(for: view.window) else { return }
+        statusBarHeightConstraint.constant = statusBarManager.statusBarFrame.height
     }
     
     /// 初始化手勢功能
@@ -91,11 +80,12 @@ private extension MessageBarViewController {
         
         let tap = UITapGestureRecognizer(target:self, action:#selector(tapGestureAction))
         let swipeUp = UISwipeGestureRecognizer(target:self, action:#selector(swipeGestureAction))
+        let swipeDown = UISwipeGestureRecognizer(target:self, action:#selector(swipeGestureAction))
 
         swipeUp.direction = .up
+        swipeDown.direction = .down
         
-        view.addGestureRecognizer(tap)
-        view.addGestureRecognizer(swipeUp)
+        view._addGestureRecognizers([tap, swipeUp, swipeDown])
     }
     
     /// 外框樣式設定
@@ -133,12 +123,29 @@ private extension MessageBarViewController {
         }
     }
     
-    /// 被點到時的反應
-    /// - Parameters:
-    ///   - touches: Set<UITouch>
-    ///   - event: UIEvent?
-    func touchesBeganAction(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let messageBar = messageBar else { return }
+    /// 被點到後的動作處理
+    func tapAction() {
+        
+        guard let messageBar = messageBar,
+              let info = info
+        else {
+            return
+        }
+        
         messageBar.delegate?.messageBar(messageBar, didTouched: info)
+    }
+    
+    /// 單指滑動的動作處理
+    /// - Parameter swipe: UISwipeGestureRecognizer
+    func swipeAction(_ swipe: UISwipeGestureRecognizer) {
+        
+        guard let messageBar = messageBar else { return }
+        
+        switch swipe.direction {
+        case .up: messageBar.dismiss()
+        case .down: messageBar.removeDismissAnimation()
+        case .left, .right: break
+        default: fatalError()
+        }
     }
 }
